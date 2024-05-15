@@ -7,10 +7,17 @@ router.post("/user", async (req, res) => {
 try{
 if(!req.body.firstname || !req.body.lastname || !req.body.email){
     return res.status(400).send({
-        message: "Send all required fields "
+        message: "Send all the required fields."
     })
 }
 const {firstname, lastname, email, password, checkbox} = req.body
+//Check if a user already exists 
+const findUser = await User.findOne({email}) 
+if(findUser){
+    return res.status(400).json({
+        msg: "User already exists"
+    })
+}
 const newUser = {
     firstname, 
     lastname,
@@ -21,7 +28,9 @@ const newUser = {
 
 const user = await User.create(newUser)
 
-return res.status(201).json(user)
+return res.status(201).json({
+    msg: "Success"
+})
 
 }
 catch(error){
@@ -35,7 +44,7 @@ router.post("/check-user", async(req, res) => {
     //Check if the email exists  
     const user = await User.findOne({email}) 
     if(!user){
-     res.status(400).json({
+     res.status(200).json({
             msg: "User not found."
         })
     }
@@ -46,7 +55,7 @@ router.post("/check-user", async(req, res) => {
             })
         }
         else{
-            res.status(400).json({
+            res.status(200).json({
                 msg: "Incorrect Credentials."
             })
         }

@@ -45,6 +45,11 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     try{
+      if(!firstname || !lastname || !email || !password){
+         return enqueueSnackbar("Please fill in the required fields!", {
+          variant: "error"
+        })
+      }
     const data = {
       firstname, 
       lastname, 
@@ -52,9 +57,9 @@ export default function SignUp() {
       password, 
       checkbox
     }
-   // console.log(data)
+  
     axios.post("http://localhost:5000/user", data)
-    .then(() => {
+    .then(() => {    
       setFirstName("") 
       setLastName("")
       setEmail("") 
@@ -63,11 +68,12 @@ export default function SignUp() {
       enqueueSnackbar("Signed up successfully", {
         variant: "success"
       })
-     navigate("/")
+     navigate("/")    
+ 
     })
     .catch((error) => {
       enqueueSnackbar("There was an error when signing you in", {
-        variant: "eror"
+        variant: "error"
       })
       navigate("/signup")
       console.log(error)
