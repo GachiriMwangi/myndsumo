@@ -65,7 +65,7 @@ export default function SignIn() {
         enqueueSnackbar("Login was successful", {
           variant: "success"
         })
-        navigate("/")
+        navigate("/dashboard")
       }
       else if(response.data.msg === "Incorrect Credentials."){
        enqueueSnackbar("Incorrect Credentials", 

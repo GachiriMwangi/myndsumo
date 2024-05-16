@@ -68,7 +68,7 @@ export default function SignUp() {
       enqueueSnackbar("Signed up successfully", {
         variant: "success"
       })
-     navigate("/")    
+     navigate("/signin")    
  
     })
     .catch((error) => {
