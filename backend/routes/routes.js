@@ -1,7 +1,10 @@
 import { Router } from "express";
 import User from "../models/userModel.js"
-const router = Router()
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 
+const router = Router()
+const JWT_SECRET = 'mysecret'
 
 router.post("/user", async (req, res) => {
 try{
@@ -18,18 +21,24 @@ if(findUser){
         msg: "User already exists"
     })
 }
+//Hash password here.
+const hashedPassword = await bcrypt.hash(password, 10)
+const token = jwt.sign({firstname}, JWT_SECRET, {
+    expiresIn: '1hr'
+})
 const newUser = {
     firstname, 
     lastname,
     email, 
-    password, 
+    password: hashedPassword, 
     checkbox 
 } 
 
 const user = await User.create(newUser)
 
 return res.status(201).json({
-    msg: "Success"
+    msg: "Success", 
+    token
 })
 
 }
@@ -50,8 +59,10 @@ router.post("/check-user", async(req, res) => {
     }
     else{      
         if(user.password === password){
+            const username = user.firstname
             res.status(200).json({
-                msg: "Authorized."
+                msg: "Authorized.", 
+                username
             })
         }
         else{
