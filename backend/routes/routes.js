@@ -57,16 +57,21 @@ router.post("/check-user", async(req, res) => {
             msg: "User not found."
         })
     }
-    else{      
-        if(user.password === password){
+    else{    
+        const validPass = await bcrypt.compare(password, user.password)             
+        if(validPass){
             const username = user.firstname
+            const token = jwt.sign({username}, JWT_SECRET, {
+                expiresIn: '2hr'
+            })
             res.status(200).json({
                 msg: "Authorized.", 
-                username
+                username, 
+                token
             })
         }
         else{
-            res.status(200).json({
+            res.status(400).json({
                 msg: "Incorrect Credentials."
             })
         }

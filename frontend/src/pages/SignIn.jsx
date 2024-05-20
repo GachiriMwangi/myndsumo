@@ -41,6 +41,7 @@ const defaultTheme = createTheme();
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const {enqueueSnackbar} = useSnackbar()
   const navigate = useNavigate()
@@ -60,6 +61,8 @@ export default function SignIn() {
     axios.post("http://localhost:5000/check-user", data)
     .then((response) => {
       if(response.data.msg === "Authorized."){
+        
+        username = response.data.username
         setEmail("")
         setPassword("") 
         enqueueSnackbar("Login was successful", {
