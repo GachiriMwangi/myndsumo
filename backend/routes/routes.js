@@ -6,6 +6,23 @@ import jwt from 'jsonwebtoken'
 const router = Router()
 const JWT_SECRET = 'mysecret'
 
+router.get("/user", async (req, res) => {  
+    const token = req.headers['authorization'] 
+    if(!token){
+        return res.status(401).json({
+            msg: "No token provided."
+        })
+    }
+    jwt.verify(token, JWT_SECRET, (err, decoded) => {
+        if(err){
+            return res.status(401).json({
+                msg: "Failed to authenticate!"
+            })
+        }
+        const finduser = 'dummy user'
+    })
+})
+
 router.post("/user", async (req, res) => {
 try{
 if(!req.body.firstname || !req.body.lastname || !req.body.email){
@@ -77,8 +94,6 @@ router.post("/check-user", async(req, res) => {
         }
     }     
 })
-
-//Update a book
 
     //Delete a user
     router.delete("/users/:id", async(req, res) => {
