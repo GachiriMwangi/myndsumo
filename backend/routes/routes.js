@@ -6,21 +6,31 @@ import jwt from 'jsonwebtoken'
 const router = Router()
 const JWT_SECRET = 'mysecret'
 
-router.get("/user", async (req, res) => {  
-    const token = req.headers['authorization'] 
-    if(!token){
+
+router.get("/user", (req, res) => {  
+    const authHeader = req.headers.authorization
+    if(!authHeader || !authHeader.startsWith('Bearer ')){
         return res.status(401).json({
-            msg: "No token provided."
+            msg: 'Someone Unauthorized!'
         })
     }
-    jwt.verify(token, JWT_SECRET, (err, decoded) => {
-        if(err){
-            return res.status(401).json({
-                msg: "Failed to authenticate!"
-            })
-        }
-        const finduser = 'dummy user'
-    })
+
+    const token = authHeader.split(' ')[1] 
+    try{
+        const decoded = jwt.verify(token, JWT_SECRET) 
+        if(decoded){
+             return res.status(200).json({
+            username: decoded.firstname
+        })
+        }       
+       
+    } 
+    catch(error){
+        res.status(401).json({
+            msg: 'Unauthorized!'
+        })
+       
+    }
 })
 
 router.post("/user", async (req, res) => {
@@ -116,5 +126,9 @@ router.post("/check-user", async(req, res) => {
             })
         }
     })
+
+    //Function to verify token.
+
+  
 
 export default router
