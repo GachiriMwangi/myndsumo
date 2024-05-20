@@ -4,9 +4,8 @@ import
  from 'react-icons/bs'
  import axios from 'axios'
 
-function Header({OpenSidebar}) {
+function Header({OpenSidebar, username}) {
 
-  const someone = "James"
   return (
     <header className='header'>
         <div className='menu-icon'>
@@ -23,7 +22,7 @@ function Header({OpenSidebar}) {
             <BsPersonCircle className='icon'/>            
             {
               //should get the first name of the person, and return.
-            someone}
+            username}
         </div>
     </header>
   )

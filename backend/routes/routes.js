@@ -8,21 +8,16 @@ const JWT_SECRET = 'mysecret'
 
 
 router.get("/user", (req, res) => {  
-
-    const authHeader = req.headers.authorization
-    if(!authHeader || !authHeader.startsWith('Bearer ')){
+    const token = req.headers['authorization']
+    if(!token){
         return res.status(401).json({
-            msg: 'Someone Unauthorized!'
+            msg: 'No token provided!'
         })
     }
-
-    const token = authHeader.split(' ')[1] 
     try{
         const decoded = jwt.verify(token, JWT_SECRET)         
         if(decoded){
-             return res.status(200).json({
-            username: decoded.firstname
-        })
+             return res.status(200).json(decoded)
         }       
        
     } 
@@ -63,11 +58,17 @@ const newUser = {
 } 
 
 const user = await User.create(newUser)
-
-return res.status(201).json({
+if(user){
+   return res.status(201).json({
     msg: "Success", 
     token
-})
+}) 
+}
+else{
+    return res.status(400).json({
+        msg: 'An error occurred while signing you in.'
+    })
+}
 
 }
 catch(error){

@@ -1,3 +1,4 @@
+const url = "http://localhost:5000"
 export const getUserInfo = async(token) => {
     const response = await fetch(`${url}/user`, {
         method: 'GET', 
@@ -9,5 +10,5 @@ export const getUserInfo = async(token) => {
     )
 
     const data = await response.json() 
-    return data       
+    return data    
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import axios from "axios"
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -41,11 +41,19 @@ const defaultTheme = createTheme();
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [username, setUsername] = useState('')
+  const [token, setToken] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const {enqueueSnackbar} = useSnackbar()
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if(token){
+      localStorage.setItem('token', token)
+    }
+    else{
+      localStorage.removeItem('token')
+    }
+  }, [token]) 
    const handleTogglePasswordVisibility = () => {
       setShowPassword((prevShowPassword) => !prevShowPassword);
     };
@@ -60,15 +68,14 @@ export default function SignIn() {
     }
     axios.post("http://localhost:5000/check-user", data)
     .then((response) => {
-      if(response.data.msg === "Authorized."){
-        
-        username = response.data.username
+      if(response.data.msg === "Authorized."){ 
+       setToken(response.data.token)       
         setEmail("")
         setPassword("") 
         enqueueSnackbar("Login was successful", {
           variant: "success"
         })
-        navigate("/dashboard")
+        navigate("/signin")
       }
       else if(response.data.msg === "Incorrect Credentials."){
        enqueueSnackbar("Incorrect Credentials", 
@@ -89,9 +96,7 @@ export default function SignIn() {
     }
     catch(error){
 
-    }
-    
-
+    }    
   };
 
   return (
