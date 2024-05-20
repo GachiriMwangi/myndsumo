@@ -8,6 +8,7 @@ const JWT_SECRET = 'mysecret'
 
 
 router.get("/user", (req, res) => {  
+
     const authHeader = req.headers.authorization
     if(!authHeader || !authHeader.startsWith('Bearer ')){
         return res.status(401).json({
@@ -17,7 +18,7 @@ router.get("/user", (req, res) => {
 
     const token = authHeader.split(' ')[1] 
     try{
-        const decoded = jwt.verify(token, JWT_SECRET) 
+        const decoded = jwt.verify(token, JWT_SECRET)         
         if(decoded){
              return res.status(200).json({
             username: decoded.firstname
