@@ -14,7 +14,7 @@ router.get("/user", (req, res) => {
             msg: 'No token provided!'
         })
     }
-    try{
+    try{ 
         const decoded = jwt.verify(token, JWT_SECRET)         
         if(decoded){
              return res.status(200).json(decoded)
@@ -22,9 +22,10 @@ router.get("/user", (req, res) => {
        
     } 
     catch(error){
-        res.status(401).json({
-            msg: 'Unauthorized!'
-        })
+        console.log(error)
+        // res.status(401).json({
+        //     msg: 'Unauthorized!'
+        // })
        
     }
 })

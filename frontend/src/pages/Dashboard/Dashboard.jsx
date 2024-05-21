@@ -41,11 +41,9 @@ const Dashboard = ({ onLogout}) => {
         {
           enqueueSnackbar('Access Denied', {
             variant: 'error'
+            
           })  
-            }
-            {
-              navigate("/")
-            }
+        }
         </>
       )
     }
