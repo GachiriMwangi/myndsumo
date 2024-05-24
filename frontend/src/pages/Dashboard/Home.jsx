@@ -63,7 +63,7 @@ function Home() {
         <div className='main-cards'>
             <div className='card'>
                 <div className='card-inner'>
-                    <h3>PRODUCTS</h3>
+                    <h3>NEWLY UPLOADED DASHBOARDS</h3>
                     <BsFillArchiveFill className='card_icon'/>
                 </div>
                 <h1>300</h1>
@@ -77,7 +77,7 @@ function Home() {
             </div>
             <div className='card'>
                 <div className='card-inner'>
-                    <h3>CUSTOMERS</h3>
+                    <h3>REPORTS</h3>
                     <BsPeopleFill className='card_icon'/>
                 </div>
                 <h1>33</h1>

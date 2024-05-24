@@ -46,36 +46,35 @@ export default function SignIn() {
   const {enqueueSnackbar} = useSnackbar()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if(token){
-      localStorage.setItem('token', token)
-    }
-    else{
-      localStorage.removeItem('token')
-    }
-  }, [token]) 
+  // useEffect(() => {
+  //   if(token){  
+  //     localStorage.removeItem('token')
+  //   }
+  // }, []) 
    const handleTogglePasswordVisibility = () => {
       setShowPassword((prevShowPassword) => !prevShowPassword);
     };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
-
+   
     try{
+      const franktoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkZyYW5rbGluIiwiaWF0IjoxNzE2NTQxMDk5LCJleHAiOjE3MTY1NDgyOTl9.DepB3CC0p-FrUA_Se4SNwSuzEI_5DMX9p6zxKt-CRvw'
     const data = {
       email, 
       password
     }
-    axios.post("http://localhost:5000/check-user", data)
+    await axios.post("http://localhost:5000/check-user", data)
     .then((response) => {
-      if(response.data.msg === "Authorized."){ 
-       setToken(response.data.token)       
+      if(response.data.msg === "Authorized."){      
+       setToken(franktoken)      
+       localStorage.setItem('token', token) 
         setEmail("")
-        setPassword("") 
+        setPassword("")         
         enqueueSnackbar("Login was successful", {
           variant: "success"
         })
-       navigate("/dashboard")
+       navigate("/dashboard") 
       }
       else if(response.data.msg === "Incorrect Credentials."){
        enqueueSnackbar("Incorrect Credentials", 

@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import 
  {BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify}
  from 'react-icons/bs'
 
-function Header({OpenSidebar, username}) {
+ import FileUpload from '../../Components/fileUpload'
 
+function Header({OpenSidebar, username, logout}) {
+const [showDropdown, setShowDropdown] = useState(false)
   return (
     <header className='header'>
         <div className='menu-icon'>
@@ -13,15 +15,24 @@ function Header({OpenSidebar, username}) {
         <div className='header-left'>
             <BsSearch  className='icon'/>
         </div>
-        <div className='header-right'>
-            <BsFillBellFill className='icon'/>
-            &nbsp;
-            <BsFillEnvelopeFill className='icon'/>
-            &nbsp;
+        <div className='header-right'>     
+        <span       
+         style={{
+          cursor: 'pointer', 
+          backgroundColor: 'white',
+          padding: '5px'
+         }}         
+         > <FileUpload />
+          </span>   
+       &nbsp; 
+        <BsFillBellFill className='icon'/>           
+
+          {//<BsFillEnvelopeFill className='icon'/>
+}            &nbsp;
             <BsPersonCircle className='icon'/>            
             {
-              //should get the first name of the person, and return.
-            username}
+            username
+            }
         </div>
     </header>
   )

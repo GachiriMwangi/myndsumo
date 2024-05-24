@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useSnackbar } from "notistack"
@@ -41,10 +41,20 @@ export default function SignUp() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [checkbox, setCheckbox] = useState(false)
+  const [token, setToken] = useState('')
 
-  const handleSubmit = (event) => {
+  // useEffect(() => {
+  //   if(token){
+  //     localStorage.setItem('token', token)
+  //   }
+  //   else{
+  //     localStorage.removeItem('token')
+  //   }
+  // }, [token]) 
+  const handleSubmit = async(event) => {
     event.preventDefault();
     try{
+     
       if(!firstname || !lastname || !email || !password){
          return enqueueSnackbar("Please fill in the required fields!", {
           variant: "error"
@@ -58,8 +68,11 @@ export default function SignUp() {
       checkbox
     }
   
-    axios.post("http://localhost:5000/user", data)
-    .then(() => {    
+   await axios.post("http://localhost:5000/user", data)
+    .then((response) => {          
+      setToken(response.data.token)
+      localStorage.setItem('token', token)
+     //console.log(response.data.token)
       setFirstName("") 
       setLastName("")
       setEmail("") 
@@ -76,7 +89,7 @@ export default function SignUp() {
         variant: "error"
       })
       navigate("/signup")
-      console.log(error)
+      console.log(error) 
     })
     }
     catch(error){
