@@ -12,9 +12,7 @@ const Dashboard = () => {
   const {enqueueSnackbar} = useSnackbar()
   const [username, setUsername] = useState('')
   const token = localStorage.getItem('token')
-  /* 
-  https://superset.topnotchhr.com/superset/dashboard/births/?native_filters_key=qBOKUpaIF8YO_bJQJqsl6NK056GoLMSOqSJNy7vA1tNAKYQn9B6C-yd2EyHN0fEc
-  */
+
   useEffect(() => {
     if(!token){
       enqueueSnackbar('Access Denied', {
