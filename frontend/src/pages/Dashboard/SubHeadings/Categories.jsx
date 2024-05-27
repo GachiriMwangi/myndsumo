@@ -1,10 +1,8 @@
 import React from 'react'
-import { useNavigate} from 'react-router-dom'
 import BackIcon from './BackIcon'
-const Categories = () => {
-    const navigate = useNavigate()
+const Categories = ({setHome}) => {
     const goBack = () => {
-        navigate("/dashboard")
+        setHome(() => true)
     }
   return (
     <div>

@@ -5,11 +5,11 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   backButton: {
-    color: 'white',  // Change this to the color you want
-    backgroundColor: '#3f51b5',  // Change this to the background color you want
+    color: 'white', 
+    backgroundColor: '#3f51b5',  
     padding: '10px',
     '&:hover': {
-      backgroundColor: '#303f9f',  // Change this to the hover color you want
+      backgroundColor: '#303f9f', 
     },
   },
 });
@@ -19,9 +19,14 @@ function BackIcon({ onClick }) {
   const classes = useStyles();
 
   return (
-    <IconButton className={classes.backButton} onClick={onClick}>
+    <>
+        <IconButton className={classes.backButton} onClick={onClick}>
       <ArrowBack />
     </IconButton>
+    &nbsp;&nbsp;
+    Go Back
+    </>
+
   );
 }
 

@@ -6,14 +6,14 @@ import Categories from './SubHeadings/Categories'
 import Reports from './SubHeadings/Reports'
 import Alerts from './SubHeadings/Alerts'
 function Home() {
-  const [home, showHome] = useState(true)
+  const [home, setShowHome] = useState(true)
   const [newlyUploaded, setNewlyUploaded] = useState(false)
   const [categories, setCategories] = useState(false)
   const [reports, setReports] = useState(false)
   const [alerts, setAlerts] = useState(false)
 
   const setActiveState = (activeState) => {
-    showHome(activeState === 'home');
+    setShowHome(activeState === 'home');
     setNewlyUploaded(activeState === 'newlyUploaded');
     setCategories(activeState === 'categories');
     setReports(activeState === 'reports');
@@ -82,28 +82,28 @@ function Home() {
       }{
         newlyUploaded && (
           <>
-        <NewlyUploaded />
+        <NewlyUploaded setHome={setShowHome}/>
           </>
         )
       }
       {
         categories && (
           <>
-          <Categories />
+          <Categories setHome={setShowHome} />
           </>
         )
       }
          {
            reports && (
             <>
-            <Reports />
+            <Reports setHome={setShowHome}/>
             </>
            )
        }
        {
         alerts && (
           <>
-          <Alerts /></>
+          <Alerts setHome={setShowHome} /></>
         )
        }
 

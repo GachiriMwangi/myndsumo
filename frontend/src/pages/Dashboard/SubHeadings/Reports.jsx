@@ -1,8 +1,8 @@
 import React from 'react'
 import BackIcon from './BackIcon'
-const Reports = () => {
+const Reports = ({setHome}) => {
     const goBack = () => {
-        alert("Go Back!")
+       setHome(() => true)
     }
   return (
     <div>

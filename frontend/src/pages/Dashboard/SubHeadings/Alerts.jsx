@@ -1,16 +1,15 @@
 import React from 'react'
 import BackIcon from './BackIcon'
-import {useNavigate} from 'react-router-dom'
-const Alerts = () => {
-    const navigate = useNavigate()
-const goBack = () => {
-    navigate("/dashboard")
+const Alerts = ({setHome}) => {    
+const goBack = () => {  
+    setHome(() => true)
 }
+
   return (
     <div>
-        <BackIcon 
-        onClick={goBack}        
-     />
+            <BackIcon 
+        onClick={goBack}       
+     /> 
         <br />
       Get Alerts!     
     </div>
