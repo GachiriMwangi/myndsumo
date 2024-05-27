@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import {useSnackbar} from 'notistack'
 import './Dashboard.css'
 import Header from './Header'
-import Sidebar from './Sidebar'
+import Sidebar from './Sidebar' 
 import Home from './Home'
 import { getUserInfo } from '../../Authentication/userAuth'
 
@@ -35,8 +35,12 @@ const Dashboard = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
 
-  const logout = ( ) => {
+  const logout = () => {
     localStorage.removeItem(token) 
+    localStorage.removeItem(username)
+    enqueueSnackbar("Logout was successful. ", {
+      variant: 'success'
+    })
     navigate("/signin")
   }
 

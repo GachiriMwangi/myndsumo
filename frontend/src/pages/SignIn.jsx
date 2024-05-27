@@ -25,8 +25,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="http://localhost:3000">
+        Mindsumo
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -41,16 +41,10 @@ const defaultTheme = createTheme();
 export default function SignIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [token, setToken] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const {enqueueSnackbar} = useSnackbar()
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if(token){  
-  //     localStorage.removeItem('token')
-  //   }
-  // }, []) 
    const handleTogglePasswordVisibility = () => {
       setShowPassword((prevShowPassword) => !prevShowPassword);
     };
@@ -58,23 +52,23 @@ export default function SignIn() {
   const handleSubmit = async(event) => {
     event.preventDefault();
    
-    try{
-      const franktoken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkZyYW5rbGluIiwiaWF0IjoxNzE2NTQxMDk5LCJleHAiOjE3MTY1NDgyOTl9.DepB3CC0p-FrUA_Se4SNwSuzEI_5DMX9p6zxKt-CRvw'
+    try{      
     const data = {
       email, 
       password
     }
     await axios.post("http://localhost:5000/check-user", data)
     .then((response) => {
-      if(response.data.msg === "Authorized."){      
-       setToken(franktoken)      
-       localStorage.setItem('token', token) 
+      if(response.data.msg === "Authorized."){
+        const {token, username} = response.data  
+       localStorage.setItem('token', token)  
         setEmail("")
         setPassword("")         
         enqueueSnackbar("Login was successful", {
           variant: "success"
         })
-       navigate("/dashboard") 
+         localStorage.setItem('username', username)
+        navigate("/dashboard")       
       }
       else if(response.data.msg === "Incorrect Credentials."){
        enqueueSnackbar("Incorrect Credentials", 

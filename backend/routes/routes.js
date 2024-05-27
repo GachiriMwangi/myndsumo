@@ -172,7 +172,7 @@ if(findUser){
 //Hash password here.
 const hashedPassword = await bcrypt.hash(password, 10)
 const token = jwt.sign({firstname}, JWT_SECRET, {
-    expiresIn: '24hr'
+    expiresIn: '30d'
 })
 const newUser = {
     firstname, 
@@ -216,7 +216,7 @@ router.post("/check-user", async(req, res) => {
         if(validPass){
             const username = user.firstname
             const token = jwt.sign({username}, JWT_SECRET, {
-                expiresIn: '24hr'
+                expiresIn: '30d'
             })
             res.status(200).json({
                 msg: "Authorized.", 

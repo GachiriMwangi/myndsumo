@@ -1,28 +1,22 @@
 import React from 'react'
 import SignUp from './SignUp'
+import { useNavigate } from 'react-router-dom'
 import {useState, useEffect} from 'react'
 const Home = () => { 
-const [token, setToken] = useState(localStorage.getItem('token'))
+
+  const navigate = useNavigate()
+const [token] = useState(localStorage.getItem('token'))
 
 useEffect(() => {
   if (token){
-    localStorage.setItem('token', token)
+    navigate("/dashboard")
   }
   else {
     localStorage.removeItem('token')
+    navigate("/signin")
   }
 }, [token])
-  return (
-    <div>
-      {
-        token ? (
-          <h1>Token Available.</h1> 
-        ) : (
-          <h1>Token not available!</h1>
-        )
-      }
-    </div>
-  )
+  return null
 }
 
 export default Home

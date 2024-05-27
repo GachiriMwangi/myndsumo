@@ -1,13 +1,25 @@
 import React, {useState} from 'react'
 import 
- {BsFillBellFill, BsFillEnvelopeFill, BsPersonCircle, BsSearch, BsJustify}
+ {BsFillBellFill, BsPersonCircle, BsSearch, BsJustify}
  from 'react-icons/bs'
-
+import './Header.css'
  import FileUpload from '../../Components/fileUpload'
 
 function Header({OpenSidebar, username, logout}) {
+
+
+
 const [showDropdown, setShowDropdown] = useState(false)
-  return (
+const toggleDropdown = () => {
+  setShowDropdown((prev) => !prev)
+}
+
+const handleLogout = () => {
+  setShowDropdown(false) 
+  logout()
+}
+
+return (
     <header className='header'>
         <div className='menu-icon'>
             <BsJustify className='icon' onClick={OpenSidebar}/>
@@ -30,9 +42,17 @@ const [showDropdown, setShowDropdown] = useState(false)
           {//<BsFillEnvelopeFill className='icon'/>
 }            &nbsp;
             <BsPersonCircle className='icon'/>            
-            {
-            username
-            }
+            <span onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
+            {username}
+          </span>
+          {showDropdown && (
+            <div className='dropdown-menu'>
+              <div className='dropdown-item'>Change Profile</div>
+              <div className='dropdown-item' onClick={handleLogout}>
+                Logout
+              </div>
+            </div>
+          )}
         </div>
     </header>
   )

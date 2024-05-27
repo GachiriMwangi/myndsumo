@@ -20,16 +20,14 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="http://localhost:3000">
+      Mindsumo
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
     </Typography>
   );
 }
-
-// TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
 
@@ -41,20 +39,10 @@ export default function SignUp() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [checkbox, setCheckbox] = useState(false)
-  const [token, setToken] = useState('')
 
-  // useEffect(() => {
-  //   if(token){
-  //     localStorage.setItem('token', token)
-  //   }
-  //   else{
-  //     localStorage.removeItem('token')
-  //   }
-  // }, [token]) 
   const handleSubmit = async(event) => {
     event.preventDefault();
-    try{
-     
+    try{     
       if(!firstname || !lastname || !email || !password){
          return enqueueSnackbar("Please fill in the required fields!", {
           variant: "error"
@@ -69,10 +57,7 @@ export default function SignUp() {
     }
   
    await axios.post("http://localhost:5000/user", data)
-    .then((response) => {          
-      setToken(response.data.token)
-      localStorage.setItem('token', token)
-     //console.log(response.data.token)
+    .then((response) => {  
       setFirstName("") 
       setLastName("")
       setEmail("") 
@@ -100,7 +85,7 @@ export default function SignUp() {
     }
 
   };
-//
+
   return (
     <ThemeProvider theme={defaultTheme} >
       <Container component="main" maxWidth="xs">
