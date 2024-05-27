@@ -7,9 +7,6 @@ const DashboardHeader = ({setActiveState}) => {
     const style = {
         cursor: 'pointer'
     }
-    const clicked = () => {
-        alert("Clicked");
-    }
   return (
     <div>
               <div className='main-title'
