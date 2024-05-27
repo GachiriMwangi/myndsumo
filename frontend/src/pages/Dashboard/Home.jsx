@@ -1,11 +1,27 @@
-import React from 'react'
- import 
- { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } 
- from 'recharts';
+import React, {useState, useEffect} from 'react'
+import Body from './Body';
 import DashboardHeader from './SubHeadings/DashboardHeader';
+import NewlyUploaded from './SubHeadings/NewlyUploaded'
+import Categories from './SubHeadings/Categories'
+import Reports from './SubHeadings/Reports'
+import Alerts from './SubHeadings/Alerts'
 function Home() {
+  const [home, showHome] = useState(true)
+  const [newlyUploaded, setNewlyUploaded] = useState(false)
+  const [categories, setCategories] = useState(false)
+  const [reports, setReports] = useState(false)
+  const [alerts, setAlerts] = useState(false)
 
-    const data = [
+  const setActiveState = (activeState) => {
+    showHome(activeState === 'home');
+    setNewlyUploaded(activeState === 'newlyUploaded');
+    setCategories(activeState === 'categories');
+    setReports(activeState === 'reports');
+    setAlerts(activeState === 'alerts');
+  };
+
+
+  const data = [
         {
           name: 'Page A',
           uv: 4000,
@@ -53,54 +69,45 @@ function Home() {
 
   return (
     <main className='main-container'>
+      { home && (
+        <>
+          <DashboardHeader 
+            setActiveState={setActiveState}
+          />
+        <Body data={data}/>
+          </>
+      )    
+          
+                
+      }{
+        newlyUploaded && (
+          <>
+        <NewlyUploaded />
+          </>
+        )
+      }
+      {
+        categories && (
+          <>
+          <Categories />
+          </>
+        )
+      }
+         {
+           reports && (
+            <>
+            <Reports />
+            </>
+           )
+       }
+       {
+        alerts && (
+          <>
+          <Alerts /></>
+        )
+       }
 
-<DashboardHeader />
-        <div className='charts'>
-            <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-            width={500}
-            height={300}
-            data={data}
-            margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-            }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="pv" fill="#8884d8" />
-                <Bar dataKey="uv" fill="#82ca9d" />
-                </BarChart>
-            </ResponsiveContainer>
-
-            <ResponsiveContainer width="100%" height="100%">
-                <LineChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                }}
-                >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                </LineChart>
-            </ResponsiveContainer>
-
-        </div>
+    
     </main>
   )
 }

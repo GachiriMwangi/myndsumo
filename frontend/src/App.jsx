@@ -3,7 +3,8 @@ import Home from './pages/Home.jsx'
 import SignIn from './pages/SignIn.jsx'
 import SignUp from './pages/SignUp.jsx'
 import Sample from './pages/Dashboard/Sample.jsx'
-import { Routes, Route } from "react-router-dom"
+//import { Alerts, Categories, NewlyUploaded, Reports } from "./pages/Dashboard/SubHeadings"
+import { Routes, Route } from "react-router-dom" 
 
 function App() {
   
@@ -15,6 +16,9 @@ function App() {
       <Route path="/signup" element={ <SignUp/> }/>  
       <Route path="/dashboard" element={<Dashboard />} />      
       <Route path="/sample" element={<Sample />} />
+ { //  <Route path="/dashboard/alerts" element={<Alerts />} />
+   // <Route path="/dashboard/categories" element={<Categories />} />
+  }
     </Routes>
     </>
   )
