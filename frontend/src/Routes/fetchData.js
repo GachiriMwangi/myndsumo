@@ -1,4 +1,4 @@
-const url = 'http://localhost:5000/api/data'
+const url = 'http://localhost:4000/api/data'
 export const fetchData = async() => {
     const response = await fetch(`${url}`, {
         method: 'GET', 

@@ -57,7 +57,7 @@ export default function SignIn() {
       email, 
       password
     }
-    await axios.post("http://localhost:5000/check-user", data)
+    await axios.post("http://localhost:4000/check-user", data)
     .then((response) => {
       if(response.data.msg === "Authorized."){
         const {token, username} = response.data  

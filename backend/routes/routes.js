@@ -11,7 +11,7 @@ import multer from 'multer'
 import AdmZip from 'adm-zip'
 
 const router = Router()
-const JWT_SECRET = 'mysecret' 
+const JWT_SECRET = process.env.JWT_SECRET
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -27,7 +27,6 @@ if (!fs.existsSync(outputFolderPath)) {
   fs.mkdirSync(outputFolderPath);
 }
 
-// Set up multer for file upload
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadsDir);
@@ -237,7 +236,7 @@ router.post("/check-user", async(req, res) => {
         try{
             const id = req.params.id
             const userToDelete = await User.findByIdAndDelete(id)    
-            if(!book){
+            if(!userToDelete){
                 return res.status(404).json({
                     Msg: "User Not Found."
                 })

@@ -56,7 +56,7 @@ export default function SignUp() {
       checkbox
     }
   
-   await axios.post("http://localhost:5000/user", data)
+   await axios.post("http://localhost:4000/user", data)
     .then((response) => {  
       setFirstName("") 
       setLastName("")

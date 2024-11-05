@@ -1,12 +1,32 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
+import axios from 'axios'
 import 
 { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill}
  from 'react-icons/bs'
 
-const DashboardHeader = ({setActiveState}) => {    
+const DashboardHeader = ({setActiveState, count}) => {    
+
+    const [countDash, setCountDash] = useState([])
+
+
+    useEffect(() => {
+        const fetchZipFiles = async () => {
+          try {
+            const response = await axios.get('http://localhost:4000/zip-files');
+           return setCountDash(response.data);     
+          } catch (error) {
+            console.error('Error fetching zip files:', error);
+          }
+        };
+    
+        fetchZipFiles();
+      }, []);
+    const totalDashboards = countDash.length
     const style = {
         cursor: 'pointer'
     }
+    
+    //console.log(count)
   return (
     <div>
               <div className='main-title'
@@ -25,25 +45,7 @@ const DashboardHeader = ({setActiveState}) => {
                     <h3>NEWLY UPLOADED DASHBOARDS</h3>
                     <BsFillArchiveFill className='card_icon'/>
                 </div>
-                <h1>300</h1>
-            </div>
-            <div className='card' style={style}
-            onClick={() => setActiveState('categories')}
-            >
-                <div className='card-inner'>
-                    <h3>CATEGORIES</h3>
-                    <BsFillGrid3X3GapFill className='card_icon'/>
-                </div>
-                <h1>12</h1>
-            </div>
-            <div className='card' style={style}
-            onClick={() => setActiveState('reports')}
-            >
-                <div className='card-inner'>
-                    <h3>REPORTS</h3>
-                    <BsPeopleFill className='card_icon'/>
-                </div>
-                <h1>33</h1>
+                <h1>{totalDashboards}</h1>
             </div>
             <div className='card' style={style}
             onClick={() => setActiveState('alerts')}            >
@@ -51,7 +53,7 @@ const DashboardHeader = ({setActiveState}) => {
                     <h3>ALERTS</h3>
                     <BsFillBellFill className='card_icon'/>
                 </div>
-                <h1>42</h1>
+                <h1>2</h1>
             </div>
         </div>
     </div>

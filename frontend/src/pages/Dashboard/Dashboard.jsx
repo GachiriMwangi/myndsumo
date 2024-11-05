@@ -29,6 +29,10 @@ const Dashboard = () => {
     }
     fetchUserInfo()
   }, [token])
+
+  const getCount = (count) => {
+    return count
+  }
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
 
   const OpenSidebar = () => {
@@ -50,8 +54,15 @@ const Dashboard = () => {
       token ? (
         <><div className='grid-container'>
       <Header OpenSidebar={OpenSidebar} username={username} logout={logout}/>
-      <Sidebar openSidebarToggle={openSidebarToggle} OpenSidebar={OpenSidebar}/>
-      <Home />
+      <Sidebar 
+      openSidebarToggle={openSidebarToggle} 
+      OpenSidebar={OpenSidebar}
+      getCount={getCount}
+      />
+      
+      <Home
+      countDashboards={getCount}
+      />
     </div> </>
       ) : (    
         null    

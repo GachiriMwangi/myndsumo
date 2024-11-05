@@ -5,7 +5,7 @@ import NewlyUploaded from './SubHeadings/NewlyUploaded'
 import Categories from './SubHeadings/Categories'
 import Reports from './SubHeadings/Reports'
 import Alerts from './SubHeadings/Alerts'
-function Home() {
+function Home({countDashboards}) {
   const [home, setShowHome] = useState(true)
   const [newlyUploaded, setNewlyUploaded] = useState(false)
   const [categories, setCategories] = useState(false)
@@ -73,33 +73,24 @@ function Home() {
         <>
           <DashboardHeader 
             setActiveState={setActiveState}
+            count={countDashboards}
           />
-        <Body data={data}/>
+       
           </>
       )    
           
                 
-      }{
-        newlyUploaded && (
-          <>
-        <NewlyUploaded setHome={setShowHome}/>
-          </>
-        )
       }
       {
-        categories && (
+        newlyUploaded && (
           <>
-          <Categories setHome={setShowHome} />
+        <NewlyUploaded 
+        setHome={setShowHome}
+        setNewlyUploaded={setNewlyUploaded}/>
           </>
         )
-      }
-         {
-           reports && (
-            <>
-            <Reports setHome={setShowHome}/>
-            </>
-           )
-       }
+      }      
+         
        {
         alerts && (
           <>
