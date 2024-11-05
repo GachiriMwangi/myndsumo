@@ -9,6 +9,8 @@ import jwt from 'jsonwebtoken'
 import { fileURLToPath } from 'url';
 import multer from 'multer'
 import AdmZip from 'adm-zip'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const router = Router()
 const JWT_SECRET = process.env.JWT_SECRET
@@ -41,7 +43,7 @@ const upload = multer({ storage: storage })
 const loadYAMLFiles = (dirPath) => {
         const files = fs.readdirSync(dirPath);
     return files.reduce((acc, file) => {
-      const filePath = path.join(dirPath, file);
+      const filePath = path.join(dirPath, file); 
       if (path.extname(file) === '.yaml') {
         const data = YAML.load(filePath);
         acc[path.basename(file, '.yaml')] = data;
@@ -62,11 +64,15 @@ const loadYAMLFiles = (dirPath) => {
 
 router.get("/api/data", (req, res) => { 
       return res.status(200).json(        
-{
+{   success: true, 
+  message: 'Dashboards Retrieved Successfully', 
+  data: {
     charts, 
     dashboards, 
     databases,
     datasets, 
+  }
+    
 
 } 
       )
@@ -92,7 +98,14 @@ router.get("/user", (req, res) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        return res.status(200).json(decoded);
+        return res.status(200).json(
+          {
+            success: true, 
+            message: 'User retrieved successfully', 
+            user_data: decoded
+          }
+         
+        );
     } catch (error) {
         console.log(error);
         return res.status(401).json({
@@ -144,8 +157,9 @@ router.post('/uploads', upload.single('file'), (req, res) => {
       // Clean up the uploaded zip file
       fs.unlinkSync(zipFilePath);
   
-      res.status(200).send({
-        message: 'File unzipped and renamed successfully.',
+      res.status(201).send({
+        success: true, 
+        message: 'File uploaded, unzipped and renamed successfully.',
       });
     } catch (error) {
       console.error('Error unzipping and renaming folder:', error.message);
@@ -184,7 +198,8 @@ const newUser = {
 const user = await User.create(newUser)
 if(user){
    return res.status(201).json({
-    msg: "Success", 
+    success: true, 
+    message: 'User Created Successfully', 
     token
 }) 
 }
@@ -200,7 +215,7 @@ console.log(error)
 }
 }) 
 
-router.post("/check-user", async(req, res) => {
+router.post("/login", async(req, res) => {
     const email = req.body.email
     const password = req.body.password
     //Check if the email exists  
@@ -213,14 +228,14 @@ router.post("/check-user", async(req, res) => {
     else{    
         const validPass = await bcrypt.compare(password, user.password)             
         if(validPass){
-            const username = user.firstname
+            const username = user.firstname + user.lastname
             const token = jwt.sign({username}, JWT_SECRET, {
                 expiresIn: '30d'
             })
             res.status(200).json({
-                msg: "Authorized.", 
-                username, 
-                token
+               success: true, 
+               message: 'User logged in Successfully', 
+               Username: username
             })
         }
         else{

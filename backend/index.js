@@ -8,13 +8,7 @@ dotenv.config()
 
 const PORT = process.env.PORT
 const mongourl = process.env.MONGOURL
-const app = express() 
-
-// app.use(cors({
-//     origin: 'http://localhost:3000', 
-//     methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-//     allowedHeaders: ['Content-Type']
-// }))
+const app = express()
 
 app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))

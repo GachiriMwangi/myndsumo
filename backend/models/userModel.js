@@ -28,5 +28,5 @@ const userSchema = mongoose.Schema(
   }
 );
 
-const Book = mongoose.model("data", userSchema);
-export default Book;
+const User = mongoose.model("data", userSchema);
+export default User;
